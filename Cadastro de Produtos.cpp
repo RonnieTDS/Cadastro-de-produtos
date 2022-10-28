@@ -17,7 +17,7 @@ void cadastro(){
 	printf("\nDigitie o nome do produto: ");
 	fflush(stdin);
 	gets(produtos[sequencia].nome);
-	printf("\nDigite o preço: ");
+	printf("\nDigite o preÃ§o: ");
 	scanf("%lf",&produtos[sequencia].preco);
 	printf("\nDigite o estoque inicial: ");
 	scanf("%d",&produtos[sequencia].estoque);
@@ -29,7 +29,7 @@ void listar(){
 	for(x=0;x<sequencia;x++){
 		printf("\nCodigo: %d",produtos[x].codigo);
 		printf("\nNome: %s",produtos[x].nome);
-		printf("\nPreço: %.2lf",produtos[x].preco);
+		printf("\nPreÃ§o: %.2lf",produtos[x].preco);
 		printf("\nEstoque: %d",produtos[x].estoque);
 		printf("\n____________________________\n");
 	}
@@ -59,7 +59,45 @@ bool verificaEstoque(int codigo,int quantidade){
 }
 
 void venda(){
-	
+int codigo;
+	bool concluida=false;
+	do{
+		system("cls");
+		printf("\nDigite o cÃ³digo do produto: ");
+		scanf("%d",&codigo);
+		if(codigo!=0){
+			if(buscar(codigo)==true){
+				printf("\nDigite a quantidade do produto: ");
+				int qtde;
+				scanf("%d",&qtde);
+				if(verificaEstoque(codigo,qtde)==true){
+					double total;
+					total=qtde*produtos[codigo-1].preco;
+					produtos[codigo-1].estoque-=qtde;
+					printf("\nvalor total: %.2lf",total);
+					printf("\nEstoque restante: %d"
+					,produtos[codigo-1].estoque);
+					printf("\ndeseja continuar 1-sim 2-nÃ£o");
+					int continuar;
+					scanf("%d",&continuar);
+					if(continuar==2){
+						concluida=true;
+					}
+				}else{
+					printf("\nQuantidade solicitada acima do estoque");
+					system("pause");
+				}
+			}else{
+				printf("\nProduto nÃ£o existe, digite outro\n");
+				system("pause");
+			}
+		}else{
+			concluida=true;
+		}
+		
+	}while(concluida==false);
+		
+	system("pause");	
 }
 
 void menu(){
@@ -90,12 +128,12 @@ main(){
 				system("pause");
 			break;
 			case 4:
-				printf("\nDigite o código do produto: ");
+				printf("\nDigite o cÃ³digo do produto: ");
 				scanf("%d",&codigo);
 				if(buscar(codigo)==true){
 					printf("\nproduto existe");
 				}else{
-					printf("\nproduto não existe");
+					printf("\nproduto nÃ£o existe");
 				}
 				system("pause");
 			break;
@@ -104,10 +142,10 @@ main(){
 				system("pause");
 			break;
 			default:
-				printf("\nOpção inválida!\n");
+				printf("\nOpÃ§Ã£o invÃ¡lida!\n");
 		}
 	}while(opcao!=0);
-	printf("\nAplicação encerrada\n");
+	printf("\nAplicaÃ§Ã£o encerrada\n");
 	
 	return 0;
 }
